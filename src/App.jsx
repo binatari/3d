@@ -3,6 +3,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { Model } from "./components/Scene";
 import Ocean from './components/Ocean';
+import { Soulless } from './components/Soulless';
+import { useControls } from 'leva';
 
 
 function Box() {
@@ -29,17 +31,24 @@ const Scene = () => {
 };
 
 const App = () => {
+
+  const options = useMemo(() => {
+    return { position: [50, 50, -30], color:"red", intensity: 3 }
+  }, [])
+
+  const light = useControls('light', options)
   return (
-    <Canvas camera={{ position: [0, 5, 100], fov: 55, near: 1, far: 20000 }}>
-     {/* <ambientLight intensity={0.5} />
+    <Canvas camera={{ position: [0, 5, 120], fov: 55, near: 1, far: 20000 }}>
+     <ambientLight intensity={0.5} />
         <spotLight position={[50, 50, -30]} castShadow />
-        <pointLight position={[-10, -10, -10]} color="red" intensity={3} />
+        <pointLight {...light} />
         <pointLight position={[0, -5, 5]} intensity={0.5} />
-        <directionalLight position={[0, -5, 0]} color="red" intensity={2} /> */}
+        <directionalLight position={[0, -5, 0]} color="red" intensity={2} />
       <OrbitControls />
       <Suspense fallback={null}>
         <Ocean />
-        <Box />
+        <Soulless scale={[0.1,0.1,0.1]}/>
+        {/* <Box /> */}
       </Suspense>
       <Environment files={'/wasteland_clouds_puresky_2k.hdr'} background/>
     </Canvas>

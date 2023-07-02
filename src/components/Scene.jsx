@@ -15,11 +15,6 @@ export function Model(props) {
   const group = useRef();
   const { nodes, materials, animations, scene } = useGLTF("/scene-transformed.glb");
   const { actions } = useAnimations(animations, group);
-
-  const waterNormals = useLoader(THREE.TextureLoader, '/waternormals.jpg')
-
-  console.log(waterNormals)
-
   useEffect(() => {
     actions.KeyAction.play();
     actions.KeyAction.timeScale = 1/4

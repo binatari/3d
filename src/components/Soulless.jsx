@@ -7,13 +7,17 @@ Source: https://sketchfab.com/3d-models/soulless-1a18f6f206b14073884e1a9c31c03cb
 Title: Soulless
 */
 
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export function Soulless(props) {
-  const { nodes, materials } = useGLTF('/soulless/scene-transformed.glb')
+  const { nodes, materials, scene } = useGLTF('/soulless/scene-transformed.glb')
 
   console.log(nodes, materials)
+  useEffect(() => {
+    scene.traverse(child => child.material ? child.material.metalness = 0.5 : null)
+  }, []);
+
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Head1Mesh_lambert3_0.geometry} material={materials.lambert3} />
