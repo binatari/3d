@@ -5,26 +5,26 @@ import Ocean from "./components/Ocean";
 import { Soulless } from "./components/Soulless";
 import {BakeShadows } from "@react-three/drei";
 import { UnrealBloomPass, RenderPass, EffectComposer } from "three-stdlib";
-
+import { block } from 'million/react';
 import Loader from "./components/Loader";
 import Effects from "./components/Effects";
 
 extend({ UnrealBloomPass, RenderPass, EffectComposer });
 
 
-const App = () => {
+const OppApp = block (function App() {
 
   return (
     <Canvas camera={{ position: [0, 5, 140], fov: 55, near: 1, far: 20000 }} shadows gl={{ antialias: false }}>
       <Scene/>
     </Canvas>
   );
-};
+});
 
-export default App;
+export default OppApp;
 
 
-const Scene = () => {
+function Scene()  {
 
   // const options = useMemo(() => {
   //   return { position: [50, 50, -30], color: "red", intensity: 3 };
@@ -48,7 +48,7 @@ const Scene = () => {
     <OrbitControls enableZoom={false} />
  
     <Suspense fallback={<Loader />}>
-    <ScrollControls damping={0.1} pages={2}>
+    <ScrollControls  pages={2}>
     <Model/>
       </ScrollControls>
     </Suspense>
@@ -58,7 +58,7 @@ const Scene = () => {
 }
 
 
-const Model = () =>{
+function Model() {
   const scroll = useScroll()
   const [down, set] = useState(false)
   // const ref = useRef()

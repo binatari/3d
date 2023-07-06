@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import million from 'million/compiler';
 import react from "@vitejs/plugin-react";
 
 // This is required for Vite to work correctly with CodeSandbox
@@ -13,5 +14,5 @@ export default defineConfig({
       "@src": resolve(__dirname, "./src"),
     },
   },
-  plugins: [react()],
+  plugins: [million.vite(), react()],
 });
