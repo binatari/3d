@@ -8,18 +8,32 @@ Title: Soulless
 */
 
 import React, { useEffect, useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useScroll } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber';
 
 export function Soulless(props) {
   const { nodes, materials, scene } = useGLTF('/soulless/scene-transformed.glb')
-
-  console.log(nodes, materials)
+  const ref = useRef()
+  const scroll = useScroll()
   useEffect(() => {
     scene.traverse(child => child.material ? child.material.metalness = 0.5 : null)
   }, []);
 
+  useFrame((state, delta) => {
+
+    // console.log(scroll
+    // const offset = 1 - scroll.offset
+
+    //used to determine the scroll postition
+    const b = scroll.range(4/ 6, 1)
+    // const startScroll = scroll.offset > 0.6 ? 0 - scroll.offset * 5 : 0
+    ref.current?.position?.set(0, - b * 50, 0)
+    // state.camera.lookAt(0, 0, 0)
+  })
+
+
   return (
-    <group {...props} dispose={null}>
+    <group {...props} ref={ref} dispose={null}>
       <mesh geometry={nodes.Head1Mesh_lambert3_0.geometry} material={materials.lambert3} />
     </group>
   )
